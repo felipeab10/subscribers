@@ -10,14 +10,17 @@ export const authConfig = {
     knownAuthorities:[import.meta.env.VITE_AZURE_B2C_AUTHORITY_DOMAIN],
     redirectUri:import.meta.env.VITE_AZURE_REDIRECT_URI,
     validateAuthority: false,
-    postLogoutRedirectUri: '/'},
+    responseType: "token",
+    postLogoutRedirectUri: '/',
+    skipAuthorityMetadataCache:true,
+    navigateToLoginRequestUrl: true,
+},
     cache: {
         cacheLocation: 'sessionStorage',
-        storeAuthStateInCookie: false
+        storeAuthStateInCookie: false,
+        secureCookies:false
         },
-    // scopes:[ 
-    //     "user.read"
-    // ],
+     
     system: {
         loggerOptions: {
             loggerCallback: (level, message, containsPii) => {
@@ -39,11 +42,15 @@ export const authConfig = {
                         return;
                 }
             },
-            //  piiLoggingEnabled: false,
+              piiLoggingEnabled: false,
         },
-
-        // windowHashTimeout: 60000,
-        // iframeHashTimeout: 6000,
-        // loadFrameTimeout: 0,
+        asyncPopups:true,
+         windowHashTimeout: 60000,
+         iframeHashTimeout: 6000,
+        loadFrameTimeout: 0,
+        preventCorsPreflight:true
     }
   }
+export const requestConfig= {
+    scopes:["https://proclinms.onmicrosoft.com/app/User.Read"],
+}

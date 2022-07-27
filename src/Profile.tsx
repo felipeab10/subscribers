@@ -1,42 +1,37 @@
-import { useMsal } from "@azure/msal-react";
-import { useState } from "react";
+import { useMsal, useAccount } from "@azure/msal-react";
+
+import { useEffect, useState } from "react";
 
 export function Profile() {
     const { instance, accounts, inProgress } = useMsal();
-    const [accessToken, setAccessToken] = useState(null);
-    const loginRequest = {
-        scopes: [""]
-    };
-    console.log('teste', accessToken)
-    console.log('accounts', accounts)
-    const name = accounts[0] && accounts[0].name;
+    const account = useAccount(accounts[0] || {})
+    const [apiData, setApiData] = useState(null);
 
-    function RequestAccessToken() {
-        const request = {
-            ...loginRequest,
-            account: accounts[0]
-        };
-
-        // Silently acquires an access token which is then attached to a request for Microsoft Graph data
-        instance.acquireTokenSilent(request).then((response) => {
-            console.log('1 ', response.accessToken)
-            setAccessToken(response.accessToken);
-        }).catch((e) => {
-            instance.acquireTokenPopup(request).then((response) => {
-                console.log('2', response.accessToken)
-                setAccessToken(response.accessToken);
+    useEffect(() => {
+        if (account) {
+            console.log(instance.getAllAccounts())
+            instance.acquireTokenSilent({
+                scopes: ["https://proclinms.onmicrosoft.com/app/User.Read"],
+                account: account
+            }).then((response) => {
+                if (response) {
+                    console.log('teta ', response)
+                    //callMsGraph(response.accessToken).then((result) => setApiData(result));
+                }
             });
-        });
-    }
+        }
+    }, [account, instance]);
 
-    return (
-        <>
-            <h5 className="card-title">Welcome {name}</h5>
-            {accessToken ?
-                <p>Access Token Acquired!</p>
-                :
-                <button onClick={RequestAccessToken}>Request Access Token</button>
-            }
-        </>
-    )
+    if (accounts.length > 0) {
+        return (
+            <>
+                <span>teta</span>
+                {apiData && (<span>Data retreived from API: {JSON.stringify(apiData)}</span>)}
+            </>
+        );
+    } else if (inProgress === "login") {
+        return <span>Login is currently in progress!</span>
+    } else {
+        return <span>There are currently no users signed in!</span>
+    }
 }
