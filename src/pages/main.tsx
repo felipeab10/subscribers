@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "../contexts/authContext";
 
-import { AppRoute } from "../services/Router";
+import { AppRoute } from "../services/routes/Router";
 import { theme } from "../styles/theme";
 import { App } from "./App";
 
