@@ -25,7 +25,7 @@ export function SingIn() {
                     </Flex>
                 </GridItem>
                 <GridItem w="100%" maxWidth={480}>
-                    <Flex bg="gray.700" m={["2", ""]} py="10" flexDirection="column">
+                    <Flex bg="gray.800" m={["2", ""]} py="10" flexDirection="column">
                         <Stack spacing="8">
                             <Stack spacing={4} w="22rem" mx="auto" >
                                 <Input _placeholder={{ color: 'gray.400', fontSize: '14px' }} name="email" type="email" label="E-mail" />

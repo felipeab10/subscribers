@@ -1,4 +1,5 @@
-import { Box, Button, Flex, Grid, GridItem, Heading, Stack } from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, GridItem, Heading, Stack, Link } from "@chakra-ui/react";
+import { Link as ReactLink } from 'react-router-dom';
 import { Input } from "../components/utils/Input";
 
 export function Register() {
@@ -25,13 +26,14 @@ export function Register() {
                     </Flex>
                 </GridItem>
                 <GridItem>
-                    <Flex height="100%" align='center' mt={["4", ""]}>
-                        <Stack spacing={8} ml={["4", ""]}  >
+                    <Flex height="100%" align="center" mt={["4", "-4"]}>
+                        <Stack spacing={4} ml={["4", ""]}  >
                             <Box  >
                                 <Heading as="span" >Subs</Heading>
                                 <Heading color="blue.900" as="span" >criber</Heading>
                             </Box>
                             <Heading fontSize="2xl">Cadastra-se é rápido e fácil</Heading>
+                            <Link transition="filter 0.2s" color="blue.900" fontWeight="semibold" _hover={{ textDecoration: 'none', filter: "brightness(0.9)" }} as={ReactLink} to="/">Voltar para o login</Link>
                         </Stack>
                     </Flex>
                 </GridItem>

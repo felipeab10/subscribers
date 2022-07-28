@@ -36,11 +36,11 @@ export const Input = React.forwardRef<RefProp, InputProps>((props, ref) => {
                 {...props}
                 ref={ref}
                 focusBorderColor="blue.900"
-                bgColor="gray.900"
+                bgColor="gray.950"
                 variant="filled"
-                _focus={{ bgColor: "gray.900" }}
+                _focus={{ bgColor: "gray.950" }}
                 _hover={{
-                    bgColor: "gray.900",
+                    bgColor: "gray.950",
                 }}
                 size="lg"
             // defaultValue={props.defaultValue}
