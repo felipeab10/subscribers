@@ -39,7 +39,6 @@ export function Register() {
         formData.append('name', values.name);
         formData.append('email', values.email);
         formData.append('password', values.password);
-        console.log(values);
         const response = await api.post('/users/', {
             name: values.name,
             email: values.email,
