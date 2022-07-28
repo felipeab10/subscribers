@@ -1,9 +1,10 @@
-import { Box, Button, Flex, Grid, GridItem, Heading, Stack, Link } from "@chakra-ui/react";
-import { Link as ReactLink } from 'react-router-dom';
+import { Box, Button, Flex, Grid, GridItem, Heading, Stack, Link, useToast } from "@chakra-ui/react";
+import { Link as ReactLink, useNavigate } from 'react-router-dom';
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Input } from "../components/utils/Input";
+import { api } from "../services/api";
 
 interface FormProps {
     email: string;
@@ -30,9 +31,32 @@ export function Register() {
         resolver: yupResolver(validation)
     });
     const { errors, isSubmitting } = formState;
+    const toast = useToast();
+    const navigate = useNavigate();
 
     const onHandleSubmit: SubmitHandler<FormProps | FieldValues> = async (values) => {
+        const formData = new FormData();
+        formData.append('name', values.name);
+        formData.append('email', values.email);
+        formData.append('password', values.password);
+        console.log(values);
+        const response = await api.post('/users/', {
+            name: values.name,
+            email: values.email,
+            password: values.password
+        });
+        if (response.status === 201) {
+            toast({
+                description: "Cadastro realizado com sucesso!",
+                status: 'success',
+                duration: 5000,
+                isClosable: true
+            });
+            navigate('/');
+        } else {
+            throw new Error("Erro ao salvar informações");
 
+        }
     }
     return (
         <Flex
