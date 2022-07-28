@@ -23,7 +23,7 @@ export function SingIn() {
     const { errors, isSubmitting } = formState;
 
     const onHandleSubmit: SubmitHandler<FormProps | FieldValues> = async (values) => {
-
+        await onLogin({ email: values.email, password: values.password });
     }
 
     return (

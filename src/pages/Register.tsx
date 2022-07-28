@@ -4,7 +4,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Input } from "../components/utils/Input";
-import { api } from "../services/api";
+import { api } from "../services/apiClient";
 
 interface FormProps {
     email: string;
