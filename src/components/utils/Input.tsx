@@ -5,7 +5,7 @@ import {
     Input as ChakraInput,
     InputProps as ChakraInputProps,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { ReactNode } from "react";
 import {
     DeepRequired,
     FieldError,
@@ -49,6 +49,7 @@ export const Input = React.forwardRef<RefProp, InputProps>((props, ref) => {
             // onChange={props.onChange}
             />
             {!!props.error && (
+                // @ts-ignore
                 <FormErrorMessage>{props.error.message}</FormErrorMessage>
             )}
         </FormControl>
