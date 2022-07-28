@@ -66,6 +66,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     const onLogin = async ({ email, password }: { email: string, password: string }) => {
         const response = await login({ email, password });
+        console.log(response);
         // @ts-ignore
         const { user, token, refreshToken } = response.data;
 
@@ -81,7 +82,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         api.defaults.headers['Authorization'] = `Bearer ${token}`
 
         navigate('/dashboard');
-        console.log(response);
+
     }
 
 

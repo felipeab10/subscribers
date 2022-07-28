@@ -1,13 +1,13 @@
 import axios,{AxiosError} from 'axios';
-import { destroyCookie, parseCookies,setCookie } from "nookies";
+import {  parseCookies,setCookie } from "nookies";
 import { onSigOut } from '../contexts/authContext';
-import { AuthTokenError } from './errors/AuthTokenError';
+
 
 
 let isRefreshing = false;
 let faildedRequestsQueue:any = []; 
 
-const { '@Subscriber.token': token } = parseCookies();
+
 
 // export const api = axios.create({
 //     baseURL: import.meta.env.VITE_API_BACKEND,
@@ -35,7 +35,7 @@ export function setupAPIClient(ctx  = undefined){
                 //renovar o token
                 cookies = parseCookies(ctx);
     
-                const {'nextauth.refreshToken': refreshToken} = cookies;
+                const {'@Subscriber.refreshToken': refreshToken} = cookies;
                 const originalConfig = error.config
     
                 if(!isRefreshing){
@@ -46,12 +46,12 @@ export function setupAPIClient(ctx  = undefined){
                     }).then(response=>{
                         const {token} = response.data;
         
-                         setCookie(ctx, 'nextauth.token', token, {
+                         setCookie(ctx, '@Subscriber.token', token, {
                     maxAge: 60 * 60 * 24 * 30, // 30 days
                     path: '/'
                 });
         
-                setCookie(ctx, 'nextauth.refreshToken', response.data.refreshToken, {
+                setCookie(ctx, '@Subscriber.refreshToken', response.data.refreshToken, {
                     maxAge: 60 * 60 * 24 * 30, // 30 days
                     path: '/'
                 });
@@ -110,12 +110,15 @@ export function setupAPIClient(ctx  = undefined){
     return new Promise((resolve,reject)=>{
         setTimeout(()=>{
             if(email === login.email && password === login.password){
-                const user = {
+                const data = {
+                   user:{
                     name:'Felipe Almeida Batista',
                     email:'felipeab10@hotmail.com',
+                   },
+                   refreshToken:'ADADSDAKKJKADII@',
                     token:'DASDA@#!@$#6535654645ddsfsf'
                 }
-                resolve(user);
+                resolve({data:data});
             }else{
                 reject('Usuário e senha inválidos!')
             }
