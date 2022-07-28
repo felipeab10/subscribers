@@ -80,7 +80,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         });
         // @ts-ignore
         api.defaults.headers['Authorization'] = `Bearer ${token}`
-
+        setUser(user);
         navigate('/dashboard');
 
     }
