@@ -1,10 +1,43 @@
 import { Box, Button, Flex, Grid, GridItem, Heading, Stack, Link } from "@chakra-ui/react";
 import { Link as ReactLink } from 'react-router-dom';
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Input } from "../components/utils/Input";
 
+interface FormProps {
+    email: string;
+    name: string;
+    password: string;
+    confirmed_password: string;
+}
+
+const validation = Yup.object().shape({
+    email: Yup.string().email().required('E-mail é obrigatório'),
+    name: Yup.string().required('Nome é obrigatório'),
+    password: Yup.string()
+        .min(8, 'A senha precisa ter ao menos 8 caracteres')
+        .required('A senha é obrigatório'),
+    confirmed_password: Yup.string().oneOf(
+        [Yup.ref('password')],
+        'Senha não confere',
+    ),
+})
+
+
 export function Register() {
+    const { register, handleSubmit, reset, formState } = useForm({
+        resolver: yupResolver(validation)
+    });
+    const { errors, isSubmitting } = formState;
+
+    const onHandleSubmit: SubmitHandler<FormProps | FieldValues> = async (values) => {
+
+    }
     return (
         <Flex
+            as="form"
+            onSubmit={handleSubmit(onHandleSubmit)}
             w="100vw"
             maxWidth={1100}
             height="100vh"
@@ -15,13 +48,38 @@ export function Register() {
             <Grid templateColumns={["1fr", "1fr 1fr"]} >
                 <GridItem>
                     <Flex bg="gray.800" w="100%" maxWidth={480} px="4" py="6" flexDirection="column">
-                        <Stack spacing={4} w="100%">
-                            <Input name="" label="Nome" isRequired type="text" />
-                            <Input name="" label="E-mail" isRequired type="email" />
-                            <Input name="" label="Senha" isRequired type="password" />
+                        <Stack spacing={2} w="100%">
+                            <Input
+                                {...register('name')}
+                                label="Nome"
+
+                                type="text"
+                                error={errors.name}
+                            />
+                            <Input
+                                {...register('email')}
+                                label="E-mail"
+
+                                type="email"
+                                error={errors.email}
+                            />
+                            <Input
+                                {...register('password')}
+                                label="Senha"
+
+                                type="password"
+                                error={errors.password}
+                            />
+                            <Input
+                                {...register('confirmed_password')}
+                                label="Confirmar senha"
+
+                                type="password"
+                                error={errors.confirmed_password}
+                            />
                         </Stack>
                         <Flex justify="center" mt="8">
-                            <Button transition="filter 0.2s" bg="blue.900" width={300} _hover={{ filter: "brightness(0.9)" }} type="submit">Cadastrar</Button>
+                            <Button isLoading={isSubmitting} transition="filter 0.2s" bg="blue.900" width={300} _hover={{ filter: "brightness(0.9)" }} type="submit">Cadastrar</Button>
                         </Flex>
                     </Flex>
                 </GridItem>
