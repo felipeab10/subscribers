@@ -70,7 +70,7 @@ export function Register() {
         >
             <Grid templateColumns={["1fr", "1fr 1fr"]} >
                 <GridItem>
-                    <Flex bg="gray.800" w="100%" maxWidth={480} px="4" py="6" flexDirection="column">
+                    <Flex borderRadius={8} bg="gray.800" w="100%" maxWidth={480} px="6" py="10" flexDirection="column">
                         <Stack spacing={2} w="100%">
                             <Input
                                 {...register('name')}

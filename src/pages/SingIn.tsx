@@ -50,7 +50,7 @@ export function SingIn() {
                     </Flex>
                 </GridItem>
                 <GridItem w="100%" maxWidth={480}>
-                    <Flex bg="gray.800" m={["2", ""]} py="10" flexDirection="column">
+                    <Flex bg="gray.800" borderRadius={8} m={["2", ""]} py="10" flexDirection="column">
                         <Stack spacing="8">
                             <Stack spacing={4} w="22rem" mx="auto" >
                                 <Input
